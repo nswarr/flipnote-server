@@ -58,7 +58,7 @@ module.exports = (grunt) ->
           dot: true
           cwd: app
           dest: build
-          src: [ "public/**/*.*" ]
+          src: [ "public/**/*.*", "views/**/*.*" ]
         ]
 
     clean:
