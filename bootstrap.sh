@@ -1,4 +1,5 @@
-cd /home/vagrant/flipnote
+GIT_USER=$1
+GIT_PASSWORD=$2
 
 #############################################################
 # Update apt-get, get dependencies
@@ -14,21 +15,26 @@ sudo add-apt-repository -y ppa:chris-lea/node.js
 sudo apt-get update
 
 echo '==> Installing base os dependencies'
-sudo apt-get -y install nginx nodejs git curl htop
+sudo apt-get -y install nginx nodejs git curl htop monit
 
 #############################################################
 # Install the application and start running
 #############################################################
+echo '==> GITing the app'
+cd /home
+git clone https://$GIT_USER:$GIT_PASSWORD@bitbucket.org/nswarr/flipnote-server.git
+cd flipnote-server
+
 echo '==> Installing grunt and loading app dependencies'
 npm install -g grunt-cli grunt request
-npm install -g
-grunt &
+npm install
+grunt build
 
 #############################################################
 # Update nginx configuration
 #############################################################
 echo '==> Updating nginx'
-cp -f ./install/nginx.conf /etc/nginx/nginx.conf
+cp -f ./install/weloveflipnote /etc/nginx/sites-enabled/weloveflipnote
 service nginx restart
 
 echo "My IP"

@@ -15,9 +15,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
-  config.vm.synced_folder ".", "/home/vagrant/flipnote", owner: "root", group: "root", :mount_options => ["dmode=777","fmode=777"]
 
-  config.vm.provision :shell, :path => "./bootstrap.sh"
+  config.vm.provision :shell,
+                      :path => "./bootstrap.sh",
+                      :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
+
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -31,10 +33,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provider :aws do |aws, override|
-    aws.ami = "ami-7747d01e"
+    aws.access_key_id = ""
+    aws.secret_access_key = ""
+    aws.keypair_name = "mysql_dw_us_west_2"
 
-    aws.region_config "us-east-1", :ami => "ami-12345678"
+    aws.ami = "ami-6aad335a"
+    aws.region = "us-west-2"
+    aws.instance_type = "t1.micro"
 
+    override.vm.box = "dummy"
     override.ssh.username = "ubuntu"
     override.ssh.private_key_path = "~/Downloads/WebServerMac.pem"
   end
