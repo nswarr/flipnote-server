@@ -2,7 +2,7 @@ GIT_USER=$1
 GIT_PASSWORD=$2
 
 #############################################################
-# Update apt-get, get dependencies
+# Build OS environment and get dependencies
 #############################################################
 sudo apt-get -y clean
 sudo apt-get update
@@ -18,7 +18,7 @@ echo '==> Installing base os dependencies'
 sudo apt-get -y install nginx nodejs git curl htop monit
 
 #############################################################
-# Install the application and start running
+# Download and build application
 #############################################################
 echo '==> GITing the app'
 cd /home
@@ -31,6 +31,19 @@ npm install
 grunt build
 
 #############################################################
+# Create application user
+#############################################################
+useradd -m -p dfbaNl6JWRVrI -s /bin/bash flipnote
+chown -R flipnote /home/flipnote-server/
+
+#############################################################
+# Create upstart service script
+#############################################################
+
+cp -f ./install/upstart /etc/init/flipnote.conf
+service flipnote start
+
+#############################################################
 # Update nginx configuration
 #############################################################
 echo '==> Updating nginx'
@@ -40,4 +53,4 @@ service nginx restart
 echo "My IP"
 ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
 
-echo "Connect to this proxy server at port 9999"
+echo "Connect to this proxy server at port 8080"
