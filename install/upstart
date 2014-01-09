@@ -9,7 +9,7 @@ script
     export HOME="/root"
 
     echo $$ > /var/run/flipnote-server.pid
-    exec sudo -u flipnote /usr/local/bin/node /home/flipnote-server/build/app.js >> /var/log/flipnote-server.sys.log 2>&1
+    exec sudo -u flipnote /usr/bin/node /home/flipnote-server/build/app.js >> /var/log/flipnote-server.sys.log 2>&1
 end script
 
 pre-start script
