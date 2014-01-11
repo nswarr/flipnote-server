@@ -8,7 +8,7 @@ links = [
   iconId: '102'
 ,
   url: 'http://flipnote.hatena.com/ds/v2-us/test-page.htm'
-  text: base64('Check this out Mishka!')
+  text: base64('Hi Mishy ;)')
   iconId: '101'
 ]
 
