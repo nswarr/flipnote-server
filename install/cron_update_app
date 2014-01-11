@@ -1,1 +1,2 @@
-* * * * * /home/flipnote-server/install/update_app.sh
+#Update the app if new code is deployed
+*/5 * * * * /home/flipnote-server/install/update_app.sh
