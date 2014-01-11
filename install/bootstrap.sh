@@ -33,13 +33,14 @@ grunt build
 #############################################################
 # Create application user
 #############################################################
+echo '==> Creating flipnote user'
 useradd -m -p dfbaNl6JWRVrI -s /bin/bash flipnote
 chown -R flipnote /home/flipnote-server/
 
 #############################################################
 # Create upstart service script
 #############################################################
-
+echo '==> Creating upstart script'
 cp -f ./install/upstart /etc/init/flipnote.conf
 service flipnote start
 
@@ -50,7 +51,8 @@ echo '==> Updating nginx'
 cp -f ./install/weloveflipnote /etc/nginx/sites-enabled/weloveflipnote
 service nginx restart
 
-echo "My IP"
-ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
-
-echo "Connect to this proxy server at port 8080"
+#############################################################
+# Create cron job to automatically deploy new code
+#############################################################
+echo '==> Creating cron job for app updates'
+crontab ./install/cron_update_app
