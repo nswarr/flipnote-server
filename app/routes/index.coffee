@@ -6,6 +6,10 @@ links = [
   url: 'http://flipnote.hatena.com/ds/v2-us/movies/preferred.uls'
   text: base64('All flipnotes')
   iconId: '102'
+,
+  url: 'http://flipnote.hatena.com/ds/v2-us/test-page.htm'
+  text: base64('Test Page')
+  iconId: '101'
 ]
 
 base64 = (str) ->
