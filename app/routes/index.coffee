@@ -28,9 +28,9 @@ exports.index = (req, res) ->
   if contentByteCount % 4 != 0
     paddingSize = 4 - contentByteCount % 4
     switch paddingSize
-      when 1 then
+      when 1
         content.writeUInt8(0x00, contentByteCount)
-      when 2 then
+      when 2
         content.writeUInt16(0x00, contentByteCount)
       when 3
         content.writeUInt8(0x00, contentByteCount)
