@@ -55,4 +55,5 @@ service nginx restart
 # Create cron job to automatically deploy new code
 #############################################################
 echo '==> Creating cron job for app updates'
+chmod +x ./install/cron_update_app
 crontab ./install/cron_update_app
