@@ -17,18 +17,30 @@ base64 = (str) ->
 
 exports.index = (req, res) ->
   content = new Buffer(BUFFER_SIZE)
-  contentPointer = 0
-  contentPointer += content.write("0\t0\n")
-  contentPointer += content.write("1\t0\t\t\t\t\t\n", 'utf8', contentPointer)
+  contentByteCount = 0
+  contentByteCount += content.write("0\t0\n")
+  contentByteCount += content.write("1\t0\t\t\t\t\t\n", 'utf8', contentByteCount)
 
   links.forEach (link) ->
     linkItem = "4\t#{link.url}\t#{link.iconId}\t#{link.text}\t\t0"
-    contentPointer +=content.write linkItem, 'utf8', contentPointer
+    contentByteCount +=content.write linkItem, 'utf8', contentByteCount
+
+  if contentByteCount % 4 != 0
+    paddingSize = 4 - contentByteCount % 4
+    switch paddingSize
+      when 1 then
+        content.writeUInt8(0x00, contentByteCount)
+      when 2 then
+        content.writeUInt16(0x00, contentByteCount)
+      when 3
+        content.writeUInt8(0x00, contentByteCount)
+        content.writeUInt16(0x00, contentByteCount + 1)
+    contentByteCount += paddingSize
 
   messageHeader = new Buffer(16)
   messageHeader.write("UGAR") #UGOs start with UGAR
   messageHeader.writeUInt32LE(0x00000002, 4) #Unknown
-  messageHeader.writeUInt32LE(contentPointer, 8) #Write out the offset of the extra data, comes after the content
+  messageHeader.writeUInt32LE(contentByteCount, 8) #Write out the offset of the extra data, comes after the content
 
   #Extra data can be icons...not sure what else can be tucked in there yet
   extraData = new Buffer(1)
@@ -36,7 +48,7 @@ exports.index = (req, res) ->
 
   console.log messageHeader
 
-  response = Buffer.concat [messageHeader, content.slice(0, contentPointer), extraData]
+  response = Buffer.concat [messageHeader, content.slice(0, contentByteCount), extraData]
 
   res.send response
 
