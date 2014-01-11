@@ -57,3 +57,4 @@ service nginx restart
 echo '==> Creating cron job for app updates'
 chmod +x ./install/cron_update_app
 crontab ./install/cron_update_app
+service cron restart
