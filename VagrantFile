@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
 
   config.vm.provision :shell,
-                      :path => "./bootstrap.sh",
+                      :path => "./install/bootstrap.sh",
                       :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
 
 
