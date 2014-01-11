@@ -22,7 +22,7 @@ exports.index = (req, res) ->
   contentByteCount += content.write("1\t0\t\t\t\t\t\n", 'utf8', contentByteCount)
 
   links.forEach (link) ->
-    linkItem = "4\t#{link.url}\t#{link.iconId}\t#{link.text}\t\t0"
+    linkItem = "4\t#{link.url}\t#{link.iconId}\t#{link.text}\t\t0\n"
     contentByteCount +=content.write linkItem, 'utf8', contentByteCount
 
   if contentByteCount % 4 != 0
