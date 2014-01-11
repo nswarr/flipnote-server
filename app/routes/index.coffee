@@ -31,10 +31,10 @@ exports.index = (req, res) ->
       when 1
         content.writeUInt8(0x00, contentByteCount)
       when 2
-        content.writeUInt16(0x00, contentByteCount)
+        content.writeUInt16LE(0x00, contentByteCount)
       when 3
         content.writeUInt8(0x00, contentByteCount)
-        content.writeUInt16(0x00, contentByteCount + 1)
+        content.writeUInt16LE(0x00, contentByteCount + 1)
     contentByteCount += paddingSize
 
   messageHeader = new Buffer(16)
