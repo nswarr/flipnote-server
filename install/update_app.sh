@@ -6,9 +6,11 @@ git fetch origin
 
 NEW_COMMITS=$(git rev-list HEAD...origin/master --count)
 
-if [$NEW_COMMITS -gt 0]; then
-    echo 'Updating the code.  $NEW_COMMITS new commits found'
+if (($NEW_COMMITS > 0)); then
+    echo Updating the code.  $NEW_COMMITS new commits found
     git pull
     grunt build
     service flipnote restart
+else
+    echo Nothing to update
 fi
