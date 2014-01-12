@@ -8,7 +8,7 @@ Then, clone this repo.
 
 > git clone https://bitbucket.org/nswarr/flipnote-server
 
-Then, go into the directory of the app you just cloned and just execute the make.
+Then, go into the directory of the app you just cloned and just execute make.
 
 > sudo make
 
