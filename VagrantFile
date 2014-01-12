@@ -16,10 +16,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
 
-  config.vm.provision :shell,
-                      :path => "./install/bootstrap.sh",
-                      :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
 
+  config.vm.provision :shell,
+                      :path => "./deploy/os_dependencies.sh"
+
+  config.vm.provision :shell,
+                      :path => "./deploy/bootstrap.sh",
+                      :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -29,7 +32,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "vmware_fusion" do |v|
     v.vmx["memsize"] = "2048"
-    v.vmx["numvcpus"] = "3"
+    v.vmx["numvcpus"] = "4"
+
+
+    v.provision :shell,
+                :path => "./deploy/os_dependencies.sh",
+                :args => "1"
+
+    v.provision :shell,
+                :path => "./deploy/bootstrap.sh",
+                :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
   end
 
   config.vm.provider :aws do |aws, override|
@@ -46,6 +58,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     override.vm.box = "dummy"
     override.ssh.username = "ubuntu"
     override.ssh.private_key_path = "~/Downloads/WebServerMac.pem"
+
+    override.vm.provision :shell,
+                        :path => "./deploy/os_dependencies.sh"
+
+    override.vm.provision :shell,
+                        :path => "./deploy/bootstrap.sh",
+                        :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
   end
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -77,9 +96,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   # Use VBoxManage to customize the VM. For example to change memory:
   #   vb.customize ["modifyvm", :id, "--memory", "1024"]
   # end
-  #
-  # View the documentation for the provider you're using for more
-  # information on available options.
 
 
 end
