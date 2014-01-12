@@ -2,12 +2,10 @@ all:
 	chmod +x ./deploy/os_dependencies.sh
 	./deploy/os_dependencies.sh
 
-	CURRENT_USER=$(who am i)
-	
 	npm install
 	grunt build
 
-	chown -R . $(CURRENT_USER)
+	chown -R $(shell logname) .
 
 	#############################################################
 	# Update nginx configuration
