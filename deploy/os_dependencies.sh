@@ -2,17 +2,17 @@
 
 VMWARE_DEPLOY=$1
 
-if [$VMWARE_DEPLOY]; then
-    echo 'deb http://mirrors.mit.edu/ubuntu/ precise main universe\n' > /etc/apt/source.list
-    echo 'deb-src http://mirrors.mit.edu/ubuntu/ precise main universe\n' >> /etc/apt/source.list
-    echo 'deb http://mirrors.mit.edu/ubuntu/ precise-updates main universe\n' >> /etc/apt/source.list
-    echo 'deb-src http://mirrors.mit.edu/ubuntu/ precise-updates main universe\n' >> /etc/apt/source.list
+#Speeds up local deployments for me significantly
+if [ $VMWARE_DEPLOY ]; then
+    echo 'deb http://mirrors.mit.edu/ubuntu/ precise main universe' > /etc/apt/sources.list
+    echo 'deb-src http://mirrors.mit.edu/ubuntu/ precise main universe' >> /etc/apt/sources.list
+    echo 'deb http://mirrors.mit.edu/ubuntu/ precise-updates main universe' >> /etc/apt/sources.list
+    echo 'deb-src http://mirrors.mit.edu/ubuntu/ precise-updates main universe' >> /etc/apt/sources.list
 fi
 
 #############################################################
 # Build OS environment and get dependencies
 #############################################################
-apt-get -y clean
 apt-get update
 apt-get -y upgrade
 

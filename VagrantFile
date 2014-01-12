@@ -16,32 +16,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
 
-
-  config.vm.provision :shell,
-                      :path => "./deploy/os_dependencies.sh"
-
-  config.vm.provision :shell,
-                      :path => "./deploy/bootstrap.sh",
-                      :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
-
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   #config.vm.network :forwarded_port, guest: 7171, host: 3000
   #config.vm.network :forwarded_port, guest: 1234, host: 1234
 
-  config.vm.provider "vmware_fusion" do |v|
+  config.vm.provider "vmware_fusion" do |v, override|
     v.vmx["memsize"] = "2048"
     v.vmx["numvcpus"] = "4"
 
 
-    v.provision :shell,
-                :path => "./deploy/os_dependencies.sh",
-                :args => "1"
+    #override.vm.provision :shell,
+    #            :path => "./deploy/os_dependencies.sh",
+    #            :args => "true"
 
-    v.provision :shell,
-                :path => "./deploy/bootstrap.sh",
-                :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
+    #override.vm.provision :shell,
+    #            :path => "./deploy/bootstrap.sh",
+    #            :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
   end
 
   config.vm.provider :aws do |aws, override|

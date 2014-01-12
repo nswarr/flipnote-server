@@ -1,4 +1,0 @@
-deb http://mirrors.mit.edu/ubuntu/ precise main universe
-deb-src http://mirrors.mit.edu/ubuntu/ precise main universe
-deb http://mirrors.mit.edu/ubuntu/ precise-updates main universe
-deb-src http://mirrors.mit.edu/ubuntu/ precise-updates main universe
