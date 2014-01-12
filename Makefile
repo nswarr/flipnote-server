@@ -1,5 +1,5 @@
 all:
-    chmod +x ./deploy/os_dependencies.sh
+	chmod +x ./deploy/os_dependencies.sh
 	./deploy/os_dependencies.sh
 
 	CURRENT_USER=$(who am i)
