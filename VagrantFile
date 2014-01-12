@@ -26,14 +26,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.vmx["memsize"] = "2048"
     v.vmx["numvcpus"] = "4"
 
+    override.vm.provision :shell,
+                :path => "./deploy/os_dependencies.sh",
+                :args => "true"
 
-    #override.vm.provision :shell,
-    #            :path => "./deploy/os_dependencies.sh",
-    #            :args => "true"
-
-    #override.vm.provision :shell,
-    #            :path => "./deploy/bootstrap.sh",
-    #            :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
+    override.vm.provision :shell,
+                :path => "./deploy/bootstrap.sh",
+                :args => "#{ENV['BITBUCKET_USER']} #{ENV['BITBUCKET_PASSWORD']}"
   end
 
   config.vm.provider :aws do |aws, override|
