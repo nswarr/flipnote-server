@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<h1>Icon Editor</h1>
+
+
+<div id="tile-map">
+
+</div>
+<button id='get-hex'>Get Hex</button>
+<textarea id='hex'></textarea>
+
+<style>
+
+    body {
+        line-height: 1px;
+    }
+
+    #tile-map {
+        padding: 3px;
+        border: 1px solid gray;
+    }
+
+    .cell {
+        width: 15px;
+        height: 15px;
+        margin: 1px;
+        display: inline-block;
+        background-color: #eceaeb;
+    }
+    .clicked {
+        background-color: green;
+    }
+</style>
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+    var LENGTH = 32;
+    var iconMap = new Array(32);
+    var tileMap = $('#tile-map');
+
+    var appendCell = function(tileMap) {
+        var cell = $('<div class="cell"></div>');
+        cell.on('click', function(){
+            $(this).toggleClass('clicked')
+        });
+        tileMap.append(cell);
+    }
+
+    for(i = 0; i < LENGTH; i++) {
+        iconMap[i] = new Array(LENGTH);
+        for(j = 0; j < LENGTH; j++){
+            appendCell(tileMap);
+        }
+        tileMap.append('<br>')
+    }
+
+    $('#get-hex').on('click', function() {
+        var hex = $('#hex');
+        hex.text('');
+        $('#tile-map div').each(function(){
+            if($(this).hasClass('clicked')){
+                hex.text(hex.text() + 'CF82');
+            } else {
+                hex.text(hex.text() + 'FF7F');
+            }
+        });
+    })
+
+</script>
+
+</body>
+</html>
