@@ -1,3 +1,6 @@
+StringDecoder = require('string_decoder').StringDecoder
+decoder = new StringDecoder('ucs2')
+
 exports.process = (ppmFile) ->
   results = {}
   metaData = {}
@@ -8,21 +11,27 @@ exports.process = (ppmFile) ->
   ppmFile.copy tmb, 0, 0, 1696
   results.tmb = tmb
 
-  tempBuffer = tmb.slice 0x0014, 0x002A
-  metaData.originalAuthor = tempBuffer.toString('utf16le')
-
-  tempBuffer = tmb.slice 0x002A, 0x0040
-  metaData.lastEditedBy = tempBuffer.toString('utf16le')
-
-  tempBuffer = tmb.slice 0x0040, 0x0056
-  metaData.userName = tempBuffer.toString('utf16le')
+  metaData.originalAuthor = getString(tmb.slice 0x0014, 0x002A)
+  metaData.lastEditedBy =  getString(tmb.slice 0x002A, 0x0040)
+  metaData.userName = getString(tmb.slice 0x0040, 0x0056)
 
   tempBuffer = tmb.slice 0x0056, 0x005E
-  flipnoteIdBin = tempBuffer.slice(0,8)
-
-  metaData.originalAuthorId = tempBuffer.slice(0,8).toString('hex')
+  metaData.originalAuthorId = getFlipnoteId tempBuffer
 
   console.log metaData
 
+getString = (buffer) ->
+  endOfString = buffer.length - 1
+  for index in [0..endOfString] by 2
+    if buffer[index] == 0 && buffer[index+1] == 0
+      endOfString = index
+      break
 
+  buffer.slice(0, endOfString).toString('utf16le')
 
+getFlipnoteId = (buffer) ->
+  temp = new Buffer(8)
+  for index in [0..7]
+    temp[index] = buffer[7 - index]
+
+  temp.toString('hex').toUpperCase()
