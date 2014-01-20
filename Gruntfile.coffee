@@ -83,5 +83,6 @@ module.exports = (grunt) ->
         done reloaded
     ), 500
 
-  grunt.registerTask "default", [ "build", "develop", "watch" ]
+  grunt.registerTask "default", [ "build", "develop", "watch", "delayed-livereload" ]
+  grunt.registerTask "ide", [ "build", "watch" ]
   grunt.registerTask "build", [ "clean:dist", "coffee:dist", "copy:dist" ]
