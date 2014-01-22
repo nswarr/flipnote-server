@@ -24,6 +24,7 @@ getString = (buffer) ->
 
   buffer.slice(0, endOfString).toString('utf16le')
 
+#Have to read it out backwards
 getFlipnoteId = (buffer) ->
   bufferLength = buffer.length
   temp = new Buffer(bufferLength)
@@ -32,8 +33,9 @@ getFlipnoteId = (buffer) ->
 
   temp.toString('hex').toUpperCase()
 
+
 getFileName = (buffer) ->
-  prefix = buffer.slice(0, 3).toString 'hex'
+  prefix = buffer.slice(0, 3).toString('hex').toUpperCase()
   fileName = buffer.slice(3, 16).toString 'utf8'
   version = "000#{buffer.readUInt16LE(16).toString()}".slice -3
 
