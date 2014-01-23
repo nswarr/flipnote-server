@@ -44,8 +44,8 @@ exports.index = (req, res) ->
   messageHeader.writeUInt32LE(contentByteCount, 8) #Write out the offset of the extra data, comes after the content
 
   #Extra data can be icons, flipnote previews, images and other stuff
-  extraData = new Buffer(1)
-  extraData.writeUInt8(0, 0)
+  extraData = new Buffer(0)
+#  extraData.writeUInt8(0, 0)
 
   response = Buffer.concat [messageHeader, content.slice(0, contentByteCount), extraData]
 
