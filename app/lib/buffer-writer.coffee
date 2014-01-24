@@ -24,18 +24,6 @@ class BufferWriter
     @
 
   getBuffer: =>
-    if @bytesWritten % 4 != 0
-      paddingSize = 4 - @bytesWritten % 4
-      switch paddingSize
-        when 1
-          @buffer.writeUInt8(0x00, @bytesWritten)
-        when 2
-          @buffer.writeUInt16LE(0x0000, @bytesWritten)
-        when 3
-          @buffer.writeUInt8(0x00, @bytesWritten)
-          @buffer.writeUInt16LE(0x0000, @bytesWritten + 1)
-    @bytesWritten += paddingSize || 0
-
     @buffer.slice(0, @bytesWritten)
 
 exports.BufferWriter = BufferWriter
