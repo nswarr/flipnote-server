@@ -21,7 +21,7 @@ app.configure "development", ->
 
 app.get "/", routes.index
 app.get "/ds/v2-us/index.ugo", routes.index
-app.post "/ds/v2/ch/flipnote.post", postFlipnote
+app.post "/flipnote.post", postFlipnote
 app.get "/ds/v2-us/movies/preferred.ugo", toplistIndex
 
 http.createServer(app).listen app.get("port"), ->
