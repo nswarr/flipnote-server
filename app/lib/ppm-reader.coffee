@@ -1,19 +1,19 @@
 exports.process = (ppmFile) ->
   tmb = ppmFile.slice 0, 1696
 
-  metadata = {}
-  metadata.originalAuthor = getString(tmb.slice 0x0014, 0x002A)
-  metadata.lastEditedBy =  getString(tmb.slice 0x002A, 0x0040)
-  metadata.userName = getString(tmb.slice 0x0040, 0x0056)
-  metadata.originalAuthorId = getFlipnoteId(tmb.slice 0x0056, 0x005E)
-  metadata.editAuthorId = getFlipnoteId(tmb.slice 0x005E, 0x0066)
-  metadata.originalFileName = getFileName(tmb.slice 0x0066, 0x0078)
-  metadata.currentFileName = getFileName(tmb.slice 0x0078, 0x008A)
-  metadata.previousEditAuthorId = getFlipnoteId(tmb.slice 0x008A, 0x0092)
-  metadata.partialFileName = tmb.slice(0x0092, 0x009A).toString('hex').toUpperCase()
-  metadata.secondsSince2000 = tmb.readUInt32LE 0x009A
+  flipDoc = {tmb: tmb, flipnote: ppmFile}
+  flipDoc.originalAuthor = getString(tmb.slice 0x0014, 0x002A)
+  flipDoc.lastEditedBy =  getString(tmb.slice 0x002A, 0x0040)
+  flipDoc.userName = getString(tmb.slice 0x0040, 0x0056)
+  flipDoc.originalAuthorId = getFlipnoteId(tmb.slice 0x0056, 0x005E)
+  flipDoc.editAuthorId = getFlipnoteId(tmb.slice 0x005E, 0x0066)
+  flipDoc.originalFileName = getFileName(tmb.slice 0x0066, 0x0078)
+  flipDoc.currentFileName = getFileName(tmb.slice 0x0078, 0x008A)
+  flipDoc.previousEditAuthorId = getFlipnoteId(tmb.slice 0x008A, 0x0092)
+  flipDoc.partialFileName = tmb.slice(0x0092, 0x009A).toString('hex').toUpperCase()
+  flipDoc.secondsSince2000 = tmb.readUInt32LE 0x009A
 
-  tmb: tmb, metadata: metadata, flipnote: ppmFile
+  flipDoc
 
 getString = (buffer) ->
   endOfString = buffer.length - 1

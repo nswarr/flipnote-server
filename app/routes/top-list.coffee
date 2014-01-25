@@ -11,7 +11,7 @@ exports.toplistIndex = (req, res) ->
   ugo.addDropDownFilter("http://flipnote.hatena.com/ds/v2-us/hotmovies.uls", "Hot!", true)
 
   MongoClient.connect("mongodb://127.0.0.1:27017/flipnote", (err, db) ->
-    db.collection('flipnotes').find().toArray((err, results) ->
+    db.collection('flipnotes').find({}, {limit:50}).toArray((err, results) ->
       results.forEach (result) ->
         ugo.addFlipnotePreview(result)
 

@@ -42,11 +42,14 @@ class TopListUgo
         w.write(1)
       else
         w.write(0)
-      w.newLine()
 
     @flipnotePreviews.forEach (header) =>
-      w.write(CONTENT_CATEGORY.PREVIEW_BUTTON).tab().write(header.metadata.originalFileName).tab().write(3).tab().tab().write(0).tab()
-      w.write(765).tab().write(573).tab().write(0).newLine()
+      w.newLine()
+      w.write(CONTENT_CATEGORY.PREVIEW_BUTTON).tab()
+      w.write("http://flipnote.hatena.com/flipnote/#{header.editAuthorId}/#{header.currentFileName}.ppm").tab()
+      w.write(3).tab().tab().write(0).tab()
+      w.write(765).tab().write(573).tab().write(0)
+
       dataSections.push header.tmb.buffer
 
     content: w.getBuffer(), data: Buffer.concat(dataSections)
