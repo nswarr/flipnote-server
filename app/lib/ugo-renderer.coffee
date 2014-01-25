@@ -10,7 +10,7 @@ exports.render = (ugo) ->
 
   alignSize = 4 - compiledUgo.content.length % 4
 
-  if alignSize == 0
+  if alignSize == 4
     Buffer.concat [header, compiledUgo.content, compiledUgo.data]
   else
     padding = new Buffer(alignSize)
