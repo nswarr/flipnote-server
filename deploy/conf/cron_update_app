@@ -1,2 +1,2 @@
 #Update the app if new code is deployed
-*/5 * * * * /home/flipnote-server/install/update_app.sh
+*/5 * * * * /home/flipnote-server/deploy/update_app.sh 2>&1 >> /var/log/flipnote-update.log

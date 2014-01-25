@@ -41,5 +41,6 @@ service flipnote start
 #############################################################
 echo '==> Creating cron job for app updates'
 chmod +x ./deploy/conf/cron_update_app
+chmod +x ./deploy/update_app.sh
 crontab ./deploy/conf/cron_update_app
 service cron restart
