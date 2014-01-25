@@ -23,6 +23,6 @@ add-apt-repository -y ppa:chris-lea/node.js
 apt-get update
 
 echo '==> Installing base os dependencies'
-apt-get -y install nginx nodejs git curl htop monit
+apt-get -y install nginx nodejs git curl htop monit mongodb
 
 npm install -g grunt-cli grunt request
