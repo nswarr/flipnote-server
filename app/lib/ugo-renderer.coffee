@@ -8,7 +8,11 @@ exports.render = (ugo) ->
   header.writeUInt32LE(compiledUgo.content.length, 8)
   header.writeUInt32LE(compiledUgo.data.length, 12)
 
-  padding = new Buffer(4 - compiledUgo.content.length % 4)
-  padding.fill(0)
+  alignSize = 4 - compiledUgo.content.length % 4
 
-  Buffer.concat [header, compiledUgo.content, padding, compiledUgo.data]
+  if alignSize > 0
+    padding = new Buffer(alignSize)
+    padding.fill(0)
+    Buffer.concat [header, compiledUgo.content, padding, compiledUgo.data]
+  else
+    Buffer.concat [header, compiledUgo.content, compiledUgo.data]
