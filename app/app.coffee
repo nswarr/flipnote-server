@@ -1,5 +1,4 @@
 express = require("express")
-params = require('express-params')
 routes = require("./routes")
 postFlipnote = require("./routes/post-flipnote").postFlipnote
 flipnoteShow = require("./routes/get-flipnote")
