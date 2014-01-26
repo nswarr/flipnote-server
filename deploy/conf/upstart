@@ -1,0 +1,27 @@
+#!upstart
+description "node.js Flipnote server"
+author      "Nick Swarr"
+
+start on startup
+stop on shutdown
+
+# This line is needed so that Upstart reports the pid of the Node.js process
+# started by Forever rather than Forever's pid.
+expect fork
+
+env NODE_BIN_DIR="/usr/bin/node"
+env NODE_PATH="/usr/lib/node_modules/"
+env APPLICATION_DIRECTORY="/home/flipnote-server/build/"
+env APPLICATION_START="app.js"
+env LOG="/var/log/flipnote-server.sys.log"
+
+script
+    PATH=$NODE_BIN_DIR:$PATH
+    exec forever --sourceDir $APPLICATION_DIRECTORY -a -l $LOG \
+         --minUptime 5000 --spinSleepTime 2000 start $APPLICATION_START
+end script
+
+pre-stop script
+    PATH=$NODE_BIN_DIR:$PATH
+    exec forever stop $APPLICATION_START >> $LOG
+end script

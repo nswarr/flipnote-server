@@ -10,7 +10,8 @@ if (($NEW_COMMITS > 0)); then
     echo Updating the code.  $NEW_COMMITS new commits found
     git pull
     npm install
-    grunt prod
+    grunt build
+    service flipnote restart
 else
-    echo Nothing to update
+    echo "[`date -u +%Y-%m-%dT%T.%3NZ`] Nothing to update"
 fi
