@@ -30,13 +30,6 @@ useradd -m -p dfbaNl6JWRVrI -s /bin/bash flipnote
 chown -R flipnote /home/flipnote-server/
 
 #############################################################
-# Create upstart service script
-#############################################################
-echo '==> Creating upstart script'
-cp -f ./deploy/conf/upstart /etc/init/flipnote.conf
-service flipnote start
-
-#############################################################
 # Create cron job to automatically deploy new code
 #############################################################
 echo '==> Creating cron job for app updates'

@@ -25,4 +25,4 @@ apt-get update
 echo '==> Installing base os dependencies'
 apt-get -y install nginx nodejs git curl htop monit mongodb
 
-npm install -g grunt-cli grunt request
+npm install -g grunt-cli grunt request forever

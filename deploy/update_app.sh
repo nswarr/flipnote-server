@@ -10,8 +10,7 @@ if (($NEW_COMMITS > 0)); then
     echo Updating the code.  $NEW_COMMITS new commits found
     git pull
     npm install
-    grunt build
-    service flipnote restart
+    grunt prod
 else
     echo Nothing to update
 fi
