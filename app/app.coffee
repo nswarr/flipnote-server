@@ -1,5 +1,6 @@
 express = require("express")
 routes = require("./routes")
+logHeaders = require('./lib/util').logHeaders
 postFlipnote = require("./routes/post-flipnote").postFlipnote
 flipnoteShow = require("./routes/get-flipnote")
 toplistIndex = require("./routes/top-list").toplistIndex
@@ -21,8 +22,9 @@ app.configure ->
   app.set "port", process.env.PORT or 7171
   app.set "views", __dirname + "/views"
   app.use express.favicon()
+  app.use logHeaders
   app.use express.logger("dev")
-  app.use express.bodyParser()
+  app.use express.cookieParser()
   app.use express.methodOverride()
   app.use app.router
   app.use express.static(path.join(__dirname, "public"))

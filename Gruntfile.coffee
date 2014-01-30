@@ -7,6 +7,10 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
 
+    develop:
+      server:
+        file: build + "app.js"
+
     watch:
       options:
         nospawn: true
@@ -14,6 +18,10 @@ module.exports = (grunt) ->
       coffee:
         files: [ app + "**/*.coffee" ]
         tasks: [ "coffee:dist" ]
+
+      server:
+        files: [ build + "**/*.*", build + "routes/*.js" ]
+        tasks: [ "develop" ]
 
     coffee:
       dist:
@@ -47,6 +55,6 @@ module.exports = (grunt) ->
         index: build + "app.js"
         logDir: "logs"
 
-  grunt.registerTask "default", [ "build", "watch"]
-  grunt.registerTask "prod", [ "build", "forever:restart"]
+  grunt.registerTask "default", [ "build", "develop", "watch" ]
+  grunt.registerTask "ide", [ "build", "watch" ]
   grunt.registerTask "build", [ "clean:dist", "coffee:dist", "copy:dist" ]
